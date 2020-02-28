@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Grid, TextField } from '@material-ui/core';
+import { TaskList } from './components/tasklist/tasklist.component';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main-container">
+      <Grid container spacing={3}>
+        <Grid item xs={12}><h2>Montrello</h2></Grid>
+        <Grid item xs={12}>
+          <TextField id="filled-basic" label="New Task" variant="filled" className="task-input" />
+        </Grid>
+        <TaskList title="Task List"/>
+        <TaskList title="In Proccess"/>
+        <TaskList title="Done"/>
+      </Grid>
     </div>
   );
 }
