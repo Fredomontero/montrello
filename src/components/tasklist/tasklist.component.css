@@ -3,3 +3,12 @@
     color: #000000;
     padding: 5px;
 }
+
+.task-container{
+    padding: 5px;
+    margin: 10px 5px;
+}
+
+.action-button{
+    margin: 0 5px !important; 
+}

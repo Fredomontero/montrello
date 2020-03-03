@@ -13,3 +13,11 @@
   background-color: rgba(255, 255, 255, 0.7);
   color: #000000;
 }
+
+.inputs-container{
+  padding: 12px;
+}
+
+.create-button{
+  height: 56px;
+}
