@@ -29,7 +29,12 @@ function rootReducer(state = initialState, action){
             return{
                 ...state,
                 error: action.payload
-            }        
+            } 
+        case "UPDATE_TASK_FAILURE":
+            return{
+                ...state,
+                error: action.payload
+            }
         default:
             return state;
     }

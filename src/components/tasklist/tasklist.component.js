@@ -11,7 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Icon from '@material-ui/core/Icon';
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { deleteTaskRequest } from '../../redux/actions/index';
+import { deleteTaskRequest, updateTaskRequest } from '../../redux/actions/index';
 
 import './tasklist.component.css';
 
@@ -21,8 +21,11 @@ export const TaskList = (props) => {
     const tasks_list = useSelector(state => state.tasks);
 
     const deleteTask = (task_id) => {
-        console.log("Deleting the task: ", task_id);
         dispatch(deleteTaskRequest(task_id));
+    }
+
+    const updateTask = (data) => {
+        dispatch(updateTaskRequest(data));
     }
 
     return(
@@ -53,14 +56,34 @@ export const TaskList = (props) => {
                                     >
                                         Delete
                                     </Button>
-                                    <Button
-                                        className="action-button"
-                                        variant="contained"
-                                        color="primary"
-                                        endIcon={<Icon>send</Icon>}
-                                    >
-                                        Next
-                                    </Button>
+                                    {
+                                        (props.status === "new") ? (
+                                            <Button
+                                                className="action-button"
+                                                variant="contained"
+                                                color="primary"
+                                                endIcon={<Icon>send</Icon>}
+                                                onClick = { () => updateTask({task_id: task._id, status: "in_proccess"}) }
+                                            >
+                                                In Proccess
+                                            </Button>
+                                        ):( 
+                                            (props.status === "in_proccess") ? (
+                                                <Button
+                                                    className="action-button"
+                                                    variant="contained"
+                                                    color="primary"
+                                                    endIcon={<Icon>send</Icon>}
+                                                    onClick = { () => updateTask({task_id: task._id, status: "done"}) }
+                                                >
+                                                    Done
+                                                </Button>
+                                            ):(
+                                                null
+                                            )
+                                        )
+                                    }
+                                    
                                 <CardActions>
                                 </CardActions>
                             </Card>

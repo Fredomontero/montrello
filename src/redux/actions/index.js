@@ -27,9 +27,14 @@ export const createTaskFailure = error => ({
     payload: error
 });
 
-export const updateTask = taskId => ({
+export const updateTaskRequest = data => ({
     type: "UPDATE_TASK_REQUEST",
-    payload: taskId
+    payload: data
+});
+
+export const updateTaskFailure = error => ({
+    type: "UPDATE_TASK_FAILURE",
+    payload: error
 });
 
 export const deleteTaskRequest = taskId => ({

@@ -5,7 +5,8 @@ import{
     loadTasksRequest,
     loadTasksSuccess,
     loadTasksFailure,
-    deleteTaskFailure
+    deleteTaskFailure,
+    updateTaskFailure
 } from '../redux/actions/index';
 
 //LoadTasks
@@ -84,7 +85,6 @@ export function* createTask(action){
     try{
         let res = yield call(fetch, 'http://localhost:4500/graphql', createTaskOptions);
         let resData = yield res.json();
-        console.log("resData inside createTask: ",resData);
         if(resData.errors){
             yield put(createTaskFailure(resData.errors[0].message));    
         }else{
@@ -101,6 +101,39 @@ export function* onCreateTaskRequest(){
 
 //Update Task
 export function* updateTask(action){
+    let updateTaskBody = {
+        query: `
+            mutation{
+                updateTask(TaskData: {
+                    _id: "${action.payload.task_id}",
+                    status: "${action.payload.status}"
+                }){
+                    _id
+                }
+            }
+        `
+    };
+
+    let updateTaskOptions = {
+        method: 'POST',
+        body: JSON.stringify(updateTaskBody),
+        credentials: "include",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    try{
+        let res = yield call(fetch, 'http://localhost:4500/graphql', updateTaskOptions);
+        let resData = yield res.json();
+        if(resData.errors){
+            yield put(updateTaskFailure(resData.errors[0].message));    
+        }else{
+            yield put(loadTasksRequest());
+        }
+    }catch(error){
+        yield put(updateTaskFailure(error));
+    }
 
 };
 
@@ -110,8 +143,6 @@ export function* onUpdateTaskRequest(){
 
 //Delete Task
 export function* deleteTask(action){
-
-    console.log("THE ACTION IN DELETE TASK IS: ", action);
 
     let deleteTaskBody = {
         query: `
@@ -135,7 +166,6 @@ export function* deleteTask(action){
     try{
         let res = yield call(fetch, 'http://localhost:4500/graphql', deleteTaskOptions);
         let resData = yield res.json();
-        console.log("resData inside deleteTask: ",resData);
         if(resData.errors){
             yield put(deleteTaskFailure(resData.errors[0].message));    
         }else{
