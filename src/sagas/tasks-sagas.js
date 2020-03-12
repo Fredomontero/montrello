@@ -9,6 +9,8 @@ import{
     updateTaskFailure
 } from '../redux/actions/index';
 
+const prod_url = '/api/';
+
 //LoadTasks
 export function* loadTasks(){
 
@@ -35,7 +37,7 @@ export function* loadTasks(){
     };
 
     try{
-        let res = yield call(fetch, 'http://localhost:4500/graphql', loadTaskRequestOptions);
+        let res = yield call(fetch, prod_url, loadTaskRequestOptions);
         let tasksData = yield res.json();
         if(tasksData.errors){
             yield put(loadTasksFailure(tasksData.errors[0].message));
@@ -83,7 +85,7 @@ export function* createTask(action){
     }
 
     try{
-        let res = yield call(fetch, 'http://localhost:4500/graphql', createTaskOptions);
+        let res = yield call(fetch, prod_url, createTaskOptions);
         let resData = yield res.json();
         if(resData.errors){
             yield put(createTaskFailure(resData.errors[0].message));    
@@ -124,7 +126,7 @@ export function* updateTask(action){
     };
 
     try{
-        let res = yield call(fetch, 'http://localhost:4500/graphql', updateTaskOptions);
+        let res = yield call(fetch, prod_url, updateTaskOptions);
         let resData = yield res.json();
         if(resData.errors){
             yield put(updateTaskFailure(resData.errors[0].message));    
@@ -164,7 +166,7 @@ export function* deleteTask(action){
     };
 
     try{
-        let res = yield call(fetch, 'http://localhost:4500/graphql', deleteTaskOptions);
+        let res = yield call(fetch, prod_url, deleteTaskOptions);
         let resData = yield res.json();
         if(resData.errors){
             yield put(deleteTaskFailure(resData.errors[0].message));    

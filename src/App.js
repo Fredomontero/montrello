@@ -11,8 +11,8 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect( () => {
-    dispatch(loadTasksRequest());
-  });
+    dispatch(loadTasksRequest())
+  }, [dispatch]);
 
   const handleClick = () => {
     let new_task = {
